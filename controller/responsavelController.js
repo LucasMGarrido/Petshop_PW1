@@ -12,7 +12,8 @@ const responsavelController = {
 
             const responseCreate = await Responsavel.create(responsavel)
 
-            res.status(201).json({msg:"Responsável criado com sucesso!", responseCreate})
+            //res.status(201).json({msg:"Responsável criado com sucesso!", responseCreate})
+            res.status(200).redirect("/api/responsavel")
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }
@@ -21,7 +22,8 @@ const responsavelController = {
         try {
             const responseRead = await Responsavel.find()
 
-            res.json({msg:"Aqui está todos os responsáveis cadastrados!", responseRead})
+            //res.json({msg:"Aqui está todos os responsáveis cadastrados!", responseRead})
+            res.status(201).render("../views/responsavel.ejs", {responseRead: responseRead})
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }
@@ -43,7 +45,8 @@ const responsavelController = {
                 return res.status(404).json({msg:"Responsável não encontrado!"})
             }
 
-            res.status(200).json({msg:"Responsável atualizado com sucesso!", responseUpdate})
+            //res.status(200).json({msg:"Responsável atualizado com sucesso!", responseUpdate})
+            res.status(200).redirect("/api/responsavel")
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }
@@ -60,7 +63,8 @@ const responsavelController = {
 
             const responseDelete = await Responsavel.findByIdAndDelete(id)
 
-            res.status(200).json({msg:"Responsável excluído com sucesso!", responseDelete})
+            //res.status(200).json({msg:"Responsável excluído com sucesso!", responseDelete})
+            res.status(200).redirect("/api/responsavel")
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }

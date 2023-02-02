@@ -23,8 +23,8 @@ const petController = {
         try {
             const responseRead = await Pet.find()
 
-            // res.json({msg:"Aqui está todos os pets cadastrados!", responseRead})
-            res.status(201).render("../views/pet.ejs", {responseRead: responseRead})
+            res.json({msg:"Aqui está todos os pets cadastrados!", responseRead})
+            // res.status(201).render("../views/pet.ejs", {responseRead: responseRead})
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }
@@ -41,8 +41,7 @@ const petController = {
 
             const responseDelete = await Pet.findByIdAndDelete(id)
 
-            //res.status(200).json({msg:"Pet excluído com sucesso!", responseDelete})
-            res.status(200).redirect("/api/pet")
+            res.status(200).json({msg:"Pet excluído com sucesso!", responseDelete})
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }
@@ -64,8 +63,7 @@ const petController = {
                 return res.status(404).json({msg:"Pet não encontrado!"})
             }
 
-            //res.status(200).json({msg:"Pet atualizado com sucesso!", responseUpdate})
-            res.status(200).redirect("/api/pet")
+            res.status(200).json({msg:"Pet atualizado com sucesso!", responseUpdate})
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }

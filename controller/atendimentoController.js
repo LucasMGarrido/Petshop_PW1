@@ -7,7 +7,8 @@ const atendimentoController = {
                 tipo: req.body.tipo,
                 responsavel: req.body.responsavel,
                 descricao: req.body.descricao,
-                horario: req.body.horario,
+                data: req.body.data,
+                hora: req.body.hora,
                 pet: req.body.pet,
             }
 
@@ -20,10 +21,10 @@ const atendimentoController = {
     },
     read: async (req, res) => {
         try {
-            const responseRead = await Atendimento.find()
+            const responseRead = await Atendimento.find().populate('responsavel pet')
 
-            res.json({msg:"Aqui está todos os atendimentos cadastrados!", responseRead})
-            // res.status(201).render("../views/pet.ejs", {responseRead: responseRead})
+            // res.json({msg:"Aqui está todos os atendimentos cadastrados!", responseRead})
+            res.status(201).render("../views/atendimentoForm.ejs", {responseRead})
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }
@@ -32,7 +33,7 @@ const atendimentoController = {
         try {
             const id = req.params.id
 
-            const responseRead = await Atendimento.findById(id)
+            const responseRead = await Atendimento.findById(id).populate('responsavel pet')
 
             if (!responseRead) {
                 return res.status(404).json({msg:"Atendimento não encontrado"})
@@ -67,7 +68,8 @@ const atendimentoController = {
                 tipo: req.body.tipo,
                 responsavel: req.body.responsavel,
                 descricao: req.body.descricao,
-                horario: req.body.horario,
+                data: req.body.data,
+                hora: req.body.hora,
                 pet: req.body.pet,
             }
 

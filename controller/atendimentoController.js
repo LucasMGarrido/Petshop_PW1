@@ -14,7 +14,8 @@ const atendimentoController = {
 
             const responseCreate = await Atendimento.create(atendimento)
 
-            res.status(200).json({msg:"Atendimento criado com sucesso!", responseCreate})
+            // res.status(200).json({msg:"Atendimento criado com sucesso!", responseCreate})
+            res.status(200).render("../views/atendimentoForm.ejs", {responseCreate})
         } catch (error) {
             console.log(`Erro: ${error}`)
         }

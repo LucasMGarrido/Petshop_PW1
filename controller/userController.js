@@ -1,5 +1,7 @@
 const { User } = require("../models/User")
 const bcrypt = require('bcrypt')
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 const userController = {
 
@@ -30,8 +32,14 @@ const userController = {
         if(!userExist){
             return res.status(400).send({error: 'Senha Inválida'})
         }
+    
+        const token = jwt.sign(user.email, process.env.SECRET, { expiresIn: 300});
+        // token sendo gerado, expira em 5 minutos
+        //res.json({ auth: true, token });//autenticação feita
+
+        res.cookie('token', token, { maxAge: 3600000, httpOnly: true, sameSite: 'Strict', secure: false})
+        res.json({ auth: true, token: token })
         
-        res.send(userExist)
     }
 }
 

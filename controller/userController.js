@@ -10,10 +10,8 @@ const userController = {
                 return res.status(400).send({error: 'Usuário já existe'})
 
            const user = await User.create(req.body)
-           
-           return res.send({user})
 
-            res.status(201).json({msg:"User criado com sucesso!", responseCreate})
+            res.status(201).json({msg:"User criado com sucesso!", user})
         } catch (error) {
             res.status(400).send({error: 'Cadastro de usuário falhou.'})
             console.log(`ERRO: ${error}`)
@@ -24,15 +22,16 @@ const userController = {
         const user = await User.findOne({email}).select('+senha')
 
         if(!user){
-            res.status(400).send({error: 'Usuário não encontrado.'})
+            return res.status(400).send({error: 'Usuário não encontrado.'})
         }
 
-        if(!await bcrypt.compare(senha, user.senha)){
-            res.status(400).send({error: 'Senha Inválida'})
+        const userExist = await bcrypt.compare(senha, user.senha)
+
+        if(!userExist){
+            return res.status(400).send({error: 'Senha Inválida'})
         }
         
-        
-        res.send({ user })
+        res.send(userExist)
     }
 }
 

@@ -23,8 +23,8 @@ const petController = {
         try {
             const responseRead = await Pet.find()
 
-            res.json({msg:"Aqui está todos os pets cadastrados!", responseRead})
-            // res.status(201).render("../views/pet.ejs", {responseRead: responseRead})
+            // res.json({msg:"Aqui está todos os pets cadastrados!", responseRead})
+            res.status(201).render("../views/pet.ejs", {responseRead: responseRead})
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }

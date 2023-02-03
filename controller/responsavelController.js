@@ -22,8 +22,8 @@ const responsavelController = {
         try {
             const responseRead = await Responsavel.find()
 
-            res.json({msg:"Aqui está todos os responsáveis cadastrados!", responseRead})
-            // res.status(200).render("../views/responsavel.ejs", {responseRead: responseRead})
+            // res.json({msg:"Aqui está todos os responsáveis cadastrados!", responseRead})
+            res.status(200).render("../views/responsavel.ejs", {responseRead: responseRead})
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }

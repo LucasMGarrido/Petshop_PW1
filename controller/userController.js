@@ -7,6 +7,7 @@ const userController = {
 
     create: async (req, res) => {
     const { email } = req.body
+    console.log(email);
         try {
             if(await User.findOne({email}))
                 return res.status(400).send({error: 'Usuário já existe'})
@@ -33,13 +34,18 @@ const userController = {
             return res.status(400).send({error: 'Senha Inválida'})
         }
     
-        const token = jwt.sign(user.email, process.env.SECRET, { expiresIn: 300});
+        const token = jwt.sign({user: email}, process.env.SECRET, { expiresIn: 300});
         // token sendo gerado, expira em 5 minutos
-        //res.json({ auth: true, token });//autenticação feita
 
         res.cookie('token', token, { maxAge: 3600000, httpOnly: true, sameSite: 'Strict', secure: false})
-        res.json({ auth: true, token: token })
+        res.json({ auth: true, token: token })//autenticação feita
         
+    },
+    login: async (req,res) =>{
+        res.render("../views/login.ejs")
+    },
+    cadastro: async(req,res) =>{
+        res.render("../views/cadastro.ejs")
     }
 }
 

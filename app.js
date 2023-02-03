@@ -6,13 +6,20 @@ const methodOverride = require("method-override")
 const conn = require("./db/conn")
 const routes = require("./routes/router")
 const app = express()
+const cookieParser = require('cookie-parser');
 
 // Iniciando o Cors
-app.use(cors())
+app.use(
+    cors({
+        credentials: true,
+        methods: 'GET, PUT, POST, OPTIONS, DELETE'
+    })
+)   
 
 // Iniciando o express parser
-app.use(parser.urlencoded({extended: false}))
+app.use(parser.urlencoded({extended: true}))
 app.use(parser.json())
+app.use(cookieParser());
 
 // Iniciando o banco
 conn()

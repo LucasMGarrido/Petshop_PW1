@@ -38,6 +38,6 @@ app.use('/api', routes)
 app.set('view engine', 'ejs')
 
 // Listando porta da aplicação
-app.listen(3000, () => {
+app.listen(3001, () => {
     console.log("SERVER RODANDO! http://localhost:3000/api")
 })

@@ -12,7 +12,6 @@ const responsavelController = {
 
             const responseCreate = await Responsavel.create(responsavel)
 
-            // res.status(201).json({msg:"Responsável criado com sucesso!", responseCreate})
             res.redirect('/api/responsavel')
         } catch (error) {
             console.log(`ERRO: ${error}`)
@@ -22,7 +21,6 @@ const responsavelController = {
         try {
             const responseRead = await Responsavel.find()
 
-            // res.json({msg:"Aqui está todos os responsáveis cadastrados!", responseRead})
             res.status(200).render("../views/responsavel.ejs", {responseRead: responseRead})
         } catch (error) {
             console.log(`ERRO: ${error}`)
@@ -42,10 +40,10 @@ const responsavelController = {
             const responseUpdate = await Responsavel.findByIdAndUpdate(id, responsavel)
 
             if(!responseUpdate){
-                return res.status(404).json({msg:"Responsável não encontrado!"})
+                const msg = "Responsável não encontrado!!"
+                return res.render('../views/erro.ejs', {msg})
             }
 
-            // res.status(200).json({msg:"Responsável atualizado com sucesso!", responseUpdate})
             res.redirect('/api/responsavel')
         } catch (error) {
             console.log(`ERRO: ${error}`)
@@ -58,12 +56,12 @@ const responsavelController = {
             const responsavel = await Responsavel.findById(id)
 
             if(!responsavel){
-                return res.status(404).json({msg:"Responsável não econtrado"})
+                const msg = "Responsável não encontrado!!"
+                return res.render('../views/erro.ejs', {msg})
             }
 
             const responseDelete = await Responsavel.findByIdAndDelete(id)
 
-            // res.status(200).json({msg:"Responsável excluído com sucesso!", responseDelete})
             res.redirect('/api/responsavel')
         } catch (error) {
             console.log(`ERRO: ${error}`)

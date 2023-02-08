@@ -34,7 +34,8 @@ const petController = {
             const pet = await Pet.findById(id)
 
             if(!pet){
-                return res.status(404).json({msg:"Pet não econtrado"})
+                const msg = "Pet não econtrado!"
+                return res.render('../views/erro.ejs', {msg})
             }
 
             const responseDelete = await Pet.findByIdAndDelete(id)
@@ -58,7 +59,8 @@ const petController = {
             const responseUpdate = await Pet.findByIdAndUpdate(id, pet)
 
             if(!responseUpdate){
-                return res.status(404).json({msg:"Pet não encontrado!"})
+                const msg = "Pet não econtrado!"
+                return res.render('../views/erro.ejs', {msg})
             }
 
             res.status(200).redirect('/api/pet')

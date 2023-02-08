@@ -14,15 +14,16 @@ const userController = {
     const { email } = req.body
         try {
             if(await User.findOne({email})){
-                return res.status(400).send({error: 'Usuário já existe'})
+                const msg = "Usuário já existe!"
+                return res.render('../views/erro.ejs', {msg})
             }
 
             await User.create(dados)
 
             res.redirect('/api/sigin')
         } catch (error) {
-            res.status(400).send({error: 'Cadastro de usuário falhou.'})
-            console.log(`ERRO: ${error}`)
+            const msg = "Cadastro de usuário falhou."
+            res.render('../views/erro.ejs', {msg})
         }
     },
     authenticate: async (req, res)=>{
@@ -30,13 +31,15 @@ const userController = {
         const user = await User.findOne({email}).select('+senha')
 
         if(!user){
-            return res.status(400).send({error: 'Usuário não encontrado.'})
+            const msg = "Usuário não encontrado!"
+            return res.render('../views/erro.ejs', {msg})
         }
 
         const userExist = await bcrypt.compare(senha, user.senha)
 
         if(!userExist){
-            return res.status(400).send({error: 'Senha Inválida'})
+            const msg = "Senha Inválida!"
+            return res.render('../views/erro.ejs', {msg})
         }
     
         const token = jwt.sign({user: email}, process.env.SECRET, { expiresIn: 3000});
@@ -54,7 +57,7 @@ const userController = {
     logout: async (req, res) => {
         const { token } = req.cookies
         res.cookie('token', token, {maxAge: 10})
-        res.redirect("/api/singin")
+        res.redirect("/api/sigin")
     }
 }
 

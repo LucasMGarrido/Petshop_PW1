@@ -16,7 +16,6 @@ const atendimentoController = {
 
             await Atendimento.create(atendimento)
 
-            // res.status(200).json({msg:"Atendimento criado com sucesso!", responseCreate})
             res.status(200).redirect('/api/atendimento')
         } catch (error) {
             console.log(`Erro: ${error}`)
@@ -29,7 +28,6 @@ const atendimentoController = {
             const resPet = await Pet.find()
             const resResponsavel = await Responsavel.find()
 
-            // res.json({msg:"Aqui está todos os atendimentos cadastrados!", responseRead})
             res.status(201).render("../views/atendimentoForm.ejs", {resAtendimento, resPet, resResponsavel})
         } catch (error) {
             console.log(`ERRO: ${error}`)
@@ -42,7 +40,8 @@ const atendimentoController = {
             const responseRead = await Atendimento.findById(id).populate('responsavel pet')
 
             if (!responseRead) {
-                return res.status(404).json({msg:"Atendimento não encontrado"})
+                const msg = "Atendimento não encontrado!"
+                return res.render('../views/erro.ejs', {msg})
             }
 
             res.json({responseRead})
@@ -57,7 +56,8 @@ const atendimentoController = {
             const atendimento = Atendimento.findById(id)
 
             if (!atendimento) {
-                return res.status(404).json({msg:"Atendimento não encontrado!"})
+                const msg = "Atendimento não encontrado!"
+                return res.render('../views/erro.ejs', {msg})
             }
 
             await Atendimento.findByIdAndDelete(id)
@@ -82,7 +82,8 @@ const atendimentoController = {
             const atendimentoExiste = await Atendimento.findById(id)
 
             if (!atendimentoExiste) {
-                return res.status(404).json({msg:"Atendimento não encontrado!"})
+                const msg = "Atendimento não encontrado!"
+                return res.render('../views/erro.ejs', {msg})
             }
 
             await Atendimento.findByIdAndUpdate(id, atendimento)

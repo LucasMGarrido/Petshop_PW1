@@ -6,15 +6,20 @@ require("dotenv").config()
 const userController = {
 
     create: async (req, res) => {
+    const dados = {
+        nome: req.body.nome,
+        email: req.body.email,
+        senha: req.body.senha
+    }
     const { email } = req.body
-    console.log(email);
         try {
-            if(await User.findOne({email}))
+            if(await User.findOne({email})){
                 return res.status(400).send({error: 'Usuário já existe'})
+            }
 
-           const user = await User.create(req.body)
+            await User.create(dados)
 
-            res.status(201).json({msg:"User criado com sucesso!", user})
+            res.redirect('/api/sigin')
         } catch (error) {
             res.status(400).send({error: 'Cadastro de usuário falhou.'})
             console.log(`ERRO: ${error}`)
@@ -34,11 +39,10 @@ const userController = {
             return res.status(400).send({error: 'Senha Inválida'})
         }
     
-        const token = jwt.sign({user: email}, process.env.SECRET, { expiresIn: 300});
-        // token sendo gerado, expira em 5 minutos
+        const token = jwt.sign({user: email}, process.env.SECRET, { expiresIn: 3000});
 
         res.cookie('token', token, { maxAge: 3600000, httpOnly: true, sameSite: 'Strict', secure: false})
-        res.json({ auth: true, token: token })//autenticação feita
+        res.redirect('/api/')
         
     },
     login: async (req,res) =>{
@@ -46,6 +50,11 @@ const userController = {
     },
     cadastro: async(req,res) =>{
         res.render("../views/cadastro.ejs")
+    },
+    logout: async (req, res) => {
+        const { token } = req.cookies
+        res.cookie('token', token, {maxAge: 10})
+        res.redirect("/api/singin")
     }
 }
 

@@ -21,4 +21,4 @@ const responsavelSchema = new mongoose.Schema({
 
 const Responsavel = mongoose.model('Responsavel', responsavelSchema)
 
-module.exports = {Responsavel, responsavelSchema}
+module.exports = Responsavel

@@ -1,4 +1,6 @@
 const Atendimento = require("../models/Atendimento")
+const Pet = require("../models/Pet")
+const Responsavel = require("../models/Responsavel")
 
 const atendimentoController = {
     create: async (req, res) => {
@@ -12,20 +14,23 @@ const atendimentoController = {
                 pet: req.body.pet,
             }
 
-            const responseCreate = await Atendimento.create(atendimento)
+            await Atendimento.create(atendimento)
 
             // res.status(200).json({msg:"Atendimento criado com sucesso!", responseCreate})
-            res.status(200).render("../views/atendimentoForm.ejs", {responseCreate})
+            res.status(200).redirect('/api/atendimento')
         } catch (error) {
             console.log(`Erro: ${error}`)
         }
     },
     read: async (req, res) => {
         try {
-            const responseRead = await Atendimento.find().populate('responsavel pet')
+
+            const resAtendimento = await Atendimento.find().populate('responsavel pet')
+            const resPet = await Pet.find()
+            const resResponsavel = await Responsavel.find()
 
             // res.json({msg:"Aqui está todos os atendimentos cadastrados!", responseRead})
-            res.status(201).render("../views/atendimentoForm.ejs", {responseRead})
+            res.status(201).render("../views/atendimentoForm.ejs", {resAtendimento, resPet, resResponsavel})
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }
@@ -55,9 +60,9 @@ const atendimentoController = {
                 return res.status(404).json({msg:"Atendimento não encontrado!"})
             }
 
-            const responseDelete = await Atendimento.findByIdAndDelete(id)
+            await Atendimento.findByIdAndDelete(id)
 
-            res.status(200).json({msg:"Atendimento excluído com sucesso!", responseDelete})
+            res.status(200).redirect('/api/atendimento')
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }
@@ -80,9 +85,9 @@ const atendimentoController = {
                 return res.status(404).json({msg:"Atendimento não encontrado!"})
             }
 
-            const responsetUpdate = await Atendimento.findByIdAndUpdate(id, atendimento)
+            await Atendimento.findByIdAndUpdate(id, atendimento)
 
-            res.status(200).json({msg:"Atendiemnto atualizado com sucesso!", responsetUpdate})
+            res.status(200).redirect('/api/atendimento')
         } catch (error) {
             console.log(`ERRO: ${error}`)
         }

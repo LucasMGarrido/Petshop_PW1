@@ -7,6 +7,7 @@ const conn = require("./db/conn")
 const routes = require("./routes/router")
 const app = express()
 const cookieParser = require('cookie-parser');
+const flash = require("connect-flash")
 
 // Iniciando o Cors
 app.use(
@@ -24,6 +25,9 @@ app.use(cookieParser());
 // Iniciando o banco
 conn()
 
+// Iniciando o flash
+app.use(flash())
+
 // Iniciando o method-override
 app.use(methodOverride('_method'))
 
@@ -34,6 +38,6 @@ app.use('/api', routes)
 app.set('view engine', 'ejs')
 
 // Listando porta da aplicação
-app.listen(3001, () => {
-    console.log("SERVER RODANDO! http://localhost:3001")
+app.listen(3000, () => {
+    console.log("SERVER RODANDO! http://localhost:3000/api")
 })

@@ -9,24 +9,23 @@
     <title>Gerenciamento dos Responsáveis</title>
 
     <style>
-    body{
-        background-color: #A08986
+     body{
+        background-color: #E8DEEE;
     }
 
-    #formularioResponsavel{
+    #formularioPet{
         width: 30%;
-        color: #ffffff;
     }
-    #formularioResponsavel input{
+    #formularioPet input{
         width: 100%;
     }
 
-    #formularioResponsavel #cadastrarbtn, #formularioResponsavel #apagarbtn{
+    #formularioPet #cadastrarbtn, #formularioPet #apagarbtn{
         width: 25%;
     }
 
     .container{
-        border: solid 3px #eaddcd;
+        border: solid 3px #A08986;
         padding: 20px;
         border-radius: 20px;
     }
@@ -35,41 +34,69 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        font-size: 30px;
+        font-size: 20px;
         margin-top: 20px;
-        font-weight: 800;
-        color: #ffffff;
+        font-weight: 700;
     }
-    tr{
-        color: #ffffff;
-    }
-
     </style>
 </head>
 <body>
+
+    <%- include('./navbar.ejs') %> 
+
     <h1>Gerenciamento dos Responsáveis</h1>
-    <form action="/api/responsavel" method="post">
-    <div class="container mt-5" id="formularioResponsavel">
-        <div class="mb-2">
-            <label for="nome" class="form-label">Nome do Responsável:</label>
-            <input type="text" name="nome" id="nome" class="form-control">
-        </div>
-        <div class="mb-2">
-            <label for="cargo" class="form-label">Cargo:</label>
-            <input type="text" name="cargo" id="cargo" class="form-control">
-        </div>
-        <div class="mb-2">
-            <label for="telefone" class="form-label">Telefone:</label>
-            <input type="text" name="telefone" id="telefone" class="form-control">
-        </div>
-        <div class="mb-4">
-            <label for="email" class="form-label">Email:</label>
-            <input type="text" name="email" id="email" class="form-control">
-        </div>
-        <input type="submit" value="Cadastrar" class="btn btn-success" id="cadastrarbtn">
-        <input type="reset" value="Apagar" class="btn btn-danger" id="apagarbtn">
+
+   <!-- Button trigger modal -->
+   <br>
+   <div class="text-center">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Adicionar Responsável
+        </button>
     </div>
-    </form>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar Responsável</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="/api/responsavel" method="post">
+                    <div class="mb-2">
+                        <label for="nome" class="form-label">Nome do Responsável:</label>
+                        <input type="text" name="nome" id="nome" class="form-control">
+                    </div>
+                    <div class="mb-2">
+                        <label for="cargo" class="form-label">Cargo:</label>
+                        <select name="cargo" id="cargo" class="form-select">
+                            <option selected>Selecione o cargo</option>
+                            <option value="Gerente">Gerente</option>
+                            <option value="Cuidador">Cuidador</option>
+                            <option value="Atendente">Atendente</option>
+                            <option value="Veterinário">Veterinário</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="telefone" class="form-label">Telefone:</label>
+                        <input type="text" name="telefone" id="telefone" class="form-control">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="text" name="email" id="email" class="form-control">
+                    </div>
+                    <input type="submit" value="Cadastrar" class="btn btn-success" id="cadastrarbtn">
+                    <input type="reset" value="Apagar" class="btn btn-danger" id="apagarbtn">
+                </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <br>
     <hr>
     <table class="table mx-auto mt-3" style="width: 75%;">
@@ -117,7 +144,13 @@
                                 </div>
                                 <div class="mb-2">
                                     <label for="cargo" class="form-label" >Cargo:</label>
-                                    <input type="text" name="cargo" id="cargo" value="<%= responseRead.cargo %>" class="form-control">
+                                    <select name="cargo" id="cargo" class="form-select">
+                                        <option selected><%= responseRead.cargo %></option>
+                                        <option value="Gerente">Gerente</option>
+                                        <option value="Cuidador">Cuidador</option>
+                                        <option value="Atendente">Atendente</option>
+                                        <option value="Veterinário">Veterinário</option>
+                                    </select>
                                 </div>
                                 <div class="mb-2">
                                     <label for="telefone" class="form-label" >Telefone:</label>

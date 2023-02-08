@@ -1,4 +1,4 @@
-const { Responsavel } = require("../models/Responsavel")
+const Responsavel = require("../models/Responsavel")
 
 const responsavelController = {
     create: async (req, res) => {

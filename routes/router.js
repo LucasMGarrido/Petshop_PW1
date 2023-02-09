@@ -4,7 +4,6 @@ const responsavelRouter = require("./responsavel")
 const atendimentoRouter = require("./atendimento")
 const userRouter = require("./user")
 const Atendimento = require("../models/Atendimento")
-const { read } = require("../controller/petController")
 
 router.get('/', async (req, res) => {
     const response = await Atendimento.find().populate('responsavel pet')

@@ -3,16 +3,14 @@ const jwt = require("jsonwebtoken")
 function verifyJWT(req, res, next){
     const { token } = req.cookies;
     if (token == undefined){
-        const msg = "Token Inválido! Usuário não está logado!"
-        return res.render('../views/erro.ejs', {msg})
+        return res.status(401).json({msg:"Token inválido! Faça login para acessar!"})
     }
     jwt.verify(token, process.env.SECRET, function(err, decoded) {
         if (err){
-            const msg = "Token Inválido!"
-            return res.render('../views/erro.ejs', {msg})
+            return res.status(498).json({msg:"Token inválido!"})
         }  
         next(); 
     }); 
-} 
+}
 
 module.exports = verifyJWT

@@ -5,6 +5,7 @@ const parser = require("body-parser")
 const methodOverride = require("method-override")
 const conn = require("./db/conn")
 const routes = require("./routes/router")
+const routesApi = require("./routes/routerApi")
 const app = express()
 const cookieParser = require('cookie-parser');
 const flash = require("connect-flash")
@@ -32,12 +33,15 @@ app.use(flash())
 app.use(methodOverride('_method'))
 
 // Iniciando as rotas
-app.use('/api', routes)
+// API-REST
+app.use('/petShop', routes)
+// Alicação
+app.use('/api', routesApi)
 
 // Iniciando o view engine
 app.set('view engine', 'ejs')
 
 // Listando porta da aplicação
-app.listen(3001, () => {
-    console.log("SERVER RODANDO! http://localhost:3000/api")
+app.listen(3000, () => {
+    console.log("SERVER RODANDO! http://localhost:3000/petShop")
 })

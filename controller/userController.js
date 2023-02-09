@@ -28,7 +28,7 @@ const userController = {
     },
     authenticate: async (req, res)=>{
         const {email, senha} = req.body
-        const user = await User.findOne({email}).select('+senha')
+        const user = await User.findOne(email).select('+senha')
 
         if(!user){
             const msg = "Usuário não encontrado!"
